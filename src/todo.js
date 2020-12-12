@@ -16,7 +16,7 @@ let handler = (()=>{
     //creates propery names or group
     let property_pair = (property_name)=>{
         let property = property_name;
-        let todos = {};
+        let todos = [];
 
         return {property , todos};
     }
@@ -30,18 +30,27 @@ let handler = (()=>{
     };
 
     
-    //addes a todo to a property
+    //addes a todo to a project
     let add_todo = (project_name , iTitle ,iDesc ,  iDate , iPrior)=>{
         for(let i = 0 ;  i < projects.length ; i++){
             //console.log(projects[i].property);
             if(projects[i].property == project_name){
-                console.log(projects[i].property);
+                projects[i].todos.push(todo(iTitle ,iDesc ,  iDate , iPrior));
+            }
+        }
+    }
+
+    //return todos of a project 
+    let get_project = (project_name)=>{
+        for(let i = 0 ;  i < projects.length ; i++){
+            if(projects[i].property == project_name){
+                return projects[i].todos;
             }
         }
     }
     
 
-    return {add_project , add_todo};
+    return {add_project , add_todo , get_project};
 })();
 
 export {handler};
