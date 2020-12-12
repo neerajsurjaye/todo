@@ -48,9 +48,28 @@ let handler = (()=>{
             }
         }
     }
+
+
+    //returns project list 
+    let get_projList = ()=>{
+        let proj_list = [];
+        for(let i = 0 ; i < projects.length ; i++){
+            proj_list.push(projects[i].property);
+        }
+        return proj_list;
+    }
+
+    let save = ()=>{
+        localStorage.setItem("projects" , JSON.stringify(projects));
+    }
+
+    let load = ()=>{
+        let newObj = JSON.parse(localStorage.getItem("projects"));
+        console.log(newObj);
+    }
     
 
-    return {add_project , add_todo , get_project};
+    return {add_project , add_todo , get_project , get_projList , save , load};
 })();
 
 export {handler};
