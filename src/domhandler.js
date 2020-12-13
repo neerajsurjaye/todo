@@ -33,24 +33,38 @@ let domhandler = (()=>{
     //makes a todo card
     let todo_card = (todo)=>{
         let element = document.createElement("div");
+        element.classList.add("cls-todo");
 
         let title = document.createElement("div");
         title.textContent = todo.title;
+        title.classList.add("title")
         element.appendChild(title);
 
         let desc = document.createElement("div");
         desc.textContent = todo.description;
         element.appendChild(desc);
+        desc.classList.add("desc");
 
         let due_date = document.createElement("div");
         due_date.textContent = todo.dueDate;
         element.appendChild(due_date);
+        due_date.classList.add("due-date")
 
         let priority = document.createElement("div");
-        priority.textContent = todo.priority;
+
+        if(todo.priority == 3){
+            priority.style.backgroundColor = "red";
+        }else if(todo.priority == 2){
+            priority.style.backgroundColor = "yellow";
+        }else{
+            priority.style.backgroundColor = "green";
+        }
+        
         element.appendChild(priority);
+        priority.classList.add("priority");
 
         let status = document.createElement("div");
+        status.classList.add("curr-status");
         status.textContent = todo.status;
         element.appendChild(status);
 
