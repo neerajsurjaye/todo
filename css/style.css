@@ -1,3 +1,7 @@
+:root{
+    --accent : #4527A0;
+}
+
 body{
     padding: 0;
     margin: 0;
@@ -7,9 +11,14 @@ body{
 #nav-bar{
     position: fixed;
     top: 0;
-    background-color: red;
+    background-color: #121212;
     width: 100%;
     height: 4rem;
+    border-bottom: solid 2px var(--accent);
+    z-index: 2;
+    color: white;
+    display: flex;
+    align-items: center;
 }
 
 /*side-panel*/
@@ -19,17 +28,46 @@ body{
     margin-top: 4rem;
     width: 20%;
     height: 100%;
-    background-color: rebeccapurple;
+    background-color: #121212;
+    border-right: solid 1px var(--accent);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .title-button{
     display: flex;
+    align-items: center;
 }
 
 .title-button > h1{
     display: inline-block;  
-    background-color: aqua;
+    color: #ddd;
+    margin-left: 15px;
 }
+
+
+
+.project-element{
+    justify-self: center;
+    margin: 5px 15px;
+    color: #ccc;
+    text-transform: capitalize;
+    background-color: #181818;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 10px;
+    border: solid 1px #181818; 
+    transition: 0.1s;
+}
+
+.project-element:hover{
+    border: solid 1px var(--accent);   
+}
+
+
 
 #container{
     position: fixed;
@@ -37,5 +75,88 @@ body{
     width: 80%;
     right: 0;
     height: 100%;
-    background-color: darkblue;
+    background-color: #121212;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+/*todos*/
+
+.cls-todo{
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 2rem;
+    color: white;
+    border: 2px solid #222;
+    background-color: #222;
+
+    margin: 5px 50px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: #c5c5c5;
+    transition: 0.1s;
+}
+.cls-todo:hover{
+    border: 2px solid var(--accent);
+}
+
+.cls-todo > * {
+    margin: 0 20px;
+}
+
+.title{
+    width: 200px;
+}
+
+#project-title{
+    padding-left: 20px;
+    color: #ddd;
+}
+
+
+.priority{
+    height: 100%;
+    width: 45px;
+    
+}
+
+.due-date{
+    margin-left: auto;
+}
+
+
+
+/*primary btn*/
+.primary-btn{
+    margin-left: auto;
+    margin-right: 15px;
+    width: 65px;
+    height: 45px;
+    font-size: 1.6rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: solid 1px var(--accent);
+    background: none;
+    color: var(--accent);
+    border-radius: 15px;
+    transition: 0.1s;
+}
+
+.primary-btn:hover{
+    border: solid 3px var(--accent);
+    font-size: 1.7rem;
+}
+
+.primary-btn:active{
+    font-size: 1.5rem;
 }
