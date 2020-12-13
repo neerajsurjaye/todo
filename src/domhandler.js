@@ -1,5 +1,7 @@
 let domhandler = (()=>{
     
+
+    //draws side project list
     let draw_project = (proj_list)=>{
         let project_list = document.getElementById("project-list");
         console.log(proj_list);
@@ -12,11 +14,23 @@ let domhandler = (()=>{
             project_list.appendChild(project_arr[i]);
         }
 
-
-
     }
 
-    return {draw_project};
+
+    let draw_todos = (list_todo)=>{
+        let todos = document.getElementById("todos");
+        let todos_arr = [];
+        console.log("list todo" , list_todo);
+
+        for(var i = 0 ; i < list_todo.length ; i++){
+            todos_arr.push(document.createElement("div"));
+            todos_arr[i].classList.add("todo-element");
+            todos_arr[i].textContent = list_todo[i].title;
+            todos.appendChild(todos_arr[i]);
+        }
+    }
+
+    return {draw_project , draw_todos   };
 })();   
 
 export {domhandler};

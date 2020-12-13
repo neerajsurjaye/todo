@@ -41,7 +41,7 @@ let handler = (()=>{
     }
 
     //return todos of a project 
-    let get_project = (project_name)=>{
+    let get_todos = (project_name)=>{
         for(let i = 0 ;  i < projects.length ; i++){
             if(projects[i].property == project_name){
                 return projects[i].todos;
@@ -69,7 +69,7 @@ let handler = (()=>{
     }
     
 
-    return {add_project , add_todo , get_project , get_projList , save , load};
+    return {add_project , add_todo , get_todos , get_projList , save , load};
 })();
 
 export {handler};
