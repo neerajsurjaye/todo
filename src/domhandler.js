@@ -16,21 +16,48 @@ let domhandler = (()=>{
 
     }
 
-
+    //draws todo
     let draw_todos = (list_todo)=>{
         let todos = document.getElementById("todos");
         let todos_arr = [];
         console.log("list todo" , list_todo);
 
         for(var i = 0 ; i < list_todo.length ; i++){
-            todos_arr.push(document.createElement("div"));
-            todos_arr[i].classList.add("todo-element");
-            todos_arr[i].textContent = list_todo[i].title;
+            todos_arr.push(todo_card(list_todo[i]));
+            console.log(todos_arr[i]);
             todos.appendChild(todos_arr[i]);
         }
     }
 
-    return {draw_project , draw_todos   };
+
+    //makes a todo card
+    let todo_card = (todo)=>{
+        let element = document.createElement("div");
+
+        let title = document.createElement("div");
+        title.textContent = todo.title;
+        element.appendChild(title);
+
+        let desc = document.createElement("div");
+        desc.textContent = todo.description;
+        element.appendChild(desc);
+
+        let due_date = document.createElement("div");
+        due_date.textContent = todo.dueDate;
+        element.appendChild(due_date);
+
+        let priority = document.createElement("div");
+        priority.textContent = todo.priority;
+        element.appendChild(priority);
+
+        let status = document.createElement("div");
+        status.textContent = todo.status;
+        element.appendChild(status);
+
+        return element;
+    }
+
+    return {draw_project , draw_todos};
 })();   
 
 export {domhandler};
