@@ -1,4 +1,5 @@
 import {handler} from "./todo"; 
+import {domhandler} from "./domhandler";
 
 
 
@@ -8,3 +9,6 @@ handler.get_project("second");
 handler.get_projList();
 //handler.save();
 handler.load();
+
+
+domhandler.draw_project(handler.get_projList());
