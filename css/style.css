@@ -204,6 +204,8 @@ body{
     margin: 8px;
     height: 2rem;
     width: 200px;
+    color: white;
+    padding: 0 10px;
 }
 
 .submit-btn{
@@ -229,6 +231,7 @@ body{
     right: 0;
     margin:15px;
     color: var(--accent);
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
