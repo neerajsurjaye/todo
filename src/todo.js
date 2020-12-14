@@ -65,7 +65,6 @@ let handler = (()=>{
 
     let load = ()=>{
         let newObj = JSON.parse(localStorage.getItem("projects"));
-        console.log(newObj);
     }
     
 

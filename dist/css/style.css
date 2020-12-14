@@ -150,7 +150,7 @@ body{
     background: none;
     color: var(--accent);
     border-radius: 15px;
-    transition: 0.1s;
+    transition: 0.05s;
 }
 
 .primary-btn:hover{

@@ -4,7 +4,7 @@ let domhandler = (()=>{
     //draws side project list
     let draw_project = (proj_list)=>{
         let project_list = document.getElementById("project-list");
-        console.log(proj_list);
+        
         let project_arr = [];
 
         for(var i = 0 ; i < proj_list.length ; i++){
@@ -20,11 +20,11 @@ let domhandler = (()=>{
     let draw_todos = (list_todo)=>{
         let todos = document.getElementById("todos");
         let todos_arr = [];
-        console.log("list todo" , list_todo);
+       
 
         for(var i = 0 ; i < list_todo.length ; i++){
             todos_arr.push(todo_card(list_todo[i]));
-            console.log(todos_arr[i]);
+            //console.log(todos_arr[i]);
             todos.appendChild(todos_arr[i]);
         }
     }
@@ -71,7 +71,43 @@ let domhandler = (()=>{
         return element;
     }
 
-    return {draw_project , draw_todos};
+    //displays form
+    let display_form = (e)=>{
+        let form_projects = document.getElementById("projects-add");
+        let form_todo = document.getElementById("todo-add");
+    
+        if(e.target.id == "add-projects"){
+            form_projects.style.display = "flex";
+        }
+
+        else if(e.target.id == "add-todo"){
+            form_todo.style.display = "flex";
+        }
+    }
+
+    //initializes add buttons
+    let init_add = ()=>{
+        let projects_add = document.getElementById("add-projects");
+        let todo_add = document.getElementById("add-todo");
+
+        projects_add.addEventListener("click" , display_form);
+        todo_add.addEventListener("click" , display_form);
+    }
+    //initializes close buttons
+    let init_close = ()=>{
+        let close_button = document.getElementsByClassName("close");
+        for(var i = 0 ; i < close_button.length ; i++){
+            close_button[i].addEventListener("click" , close_form);
+        }
+    }
+
+    //initializes
+    let init = ()=>{
+        init_add();
+        init_close();
+    }
+
+    return {draw_project , draw_todos , init};
 })();   
 
 export {domhandler};

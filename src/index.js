@@ -14,7 +14,10 @@ handler.get_projList();
 //handler.save();
 handler.load();
 
-
+domhandler.init();
 domhandler.draw_project(handler.get_projList());
 
 domhandler.draw_todos(handler.get_todos("second"));
+
+
+//
