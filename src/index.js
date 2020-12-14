@@ -4,10 +4,12 @@ import {domhandler} from "./domhandler";
 
 
 handler.add_project("second" );
+
 //temp
 handler.add_todo("second","list",324,234,0);
 handler.add_todo("second","asdf",324,234,0);
 handler.add_todo("second","asdfsda",324,234,2);
+
 
 handler.get_todos("second");
 handler.get_projList();
@@ -19,5 +21,23 @@ domhandler.draw_project(handler.get_projList());
 
 domhandler.draw_todos(handler.get_todos("second"));
 
+
+let main = (()=>{
+    let current_project = "default";
+
+    let init = ()=>{
+
+    };
+
+    
+
+
+    
+
+
+    return {init}
+})();
+
+main.init();
 
 //

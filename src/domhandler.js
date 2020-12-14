@@ -1,10 +1,15 @@
+
+import {handler} from "./todo"; 
+
+
+
 let domhandler = (()=>{
     
 
     //draws side project list
     let draw_project = (proj_list)=>{
         let project_list = document.getElementById("project-list");
-        
+        console.log("draw proj" , proj_list);
         let project_arr = [];
 
         for(var i = 0 ; i < proj_list.length ; i++){
@@ -14,6 +19,11 @@ let domhandler = (()=>{
             project_list.appendChild(project_arr[i]);
         }
 
+    }
+
+    let remove_project = ()=>{
+        let project_list = document.getElementById("project-list");
+        project_list.innerHTML = "";
     }
 
     //draws todo
@@ -93,6 +103,11 @@ let domhandler = (()=>{
         projects_add.addEventListener("click" , display_form);
         todo_add.addEventListener("click" , display_form);
     }
+
+    let close_form = (e)=>{
+        e.target.parentElement.parentElement.style.display = "none";
+    }
+
     //initializes close buttons
     let init_close = ()=>{
         let close_button = document.getElementsByClassName("close");
@@ -100,11 +115,32 @@ let domhandler = (()=>{
             close_button[i].addEventListener("click" , close_form);
         }
     }
+    //handles project submit
+    let submit_project = ()=>{
+        let form_submit = document.getElementById("submit-projects");
+        
+        form_submit.addEventListener("click" , event_sub_project);
+    }
+
+    let event_sub_project = ()=>{      
+        let input_project = document.getElementById("input-project");
+        
+        handler.add_project(input_project.value);
+        
+        remove_project();
+        draw_project(handler.get_projList());
+        input_project.parentElement.parentElement.style.display = "none";
+    }
+
+
+
 
     //initializes
     let init = ()=>{
         init_add();
         init_close();
+        submit_project();
+       
     }
 
     return {draw_project , draw_todos , init};

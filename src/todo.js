@@ -66,9 +66,13 @@ let handler = (()=>{
     let load = ()=>{
         let newObj = JSON.parse(localStorage.getItem("projects"));
     }
+
+   
+    
     
 
-    return {add_project , add_todo , get_todos , get_projList , save , load};
+
+    return {add_project , add_todo , get_todos , get_projList , save , load  , projects};
 })();
 
 export {handler};
