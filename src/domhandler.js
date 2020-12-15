@@ -9,13 +9,14 @@ let domhandler = (()=>{
     //draws side project list
     let draw_project = (proj_list)=>{
         let project_list = document.getElementById("project-list");
-        console.log("draw proj" , proj_list);
+        
         let project_arr = [];
 
         for(var i = 0 ; i < proj_list.length ; i++){
             project_arr.push(document.createElement("div"));
             project_arr[i].classList.add("project-element");
             project_arr[i].textContent = proj_list[i];
+            project_arr[i].dataset.name = proj_list[i];
             project_list.appendChild(project_arr[i]);
         }
 
@@ -33,17 +34,23 @@ let domhandler = (()=>{
        
 
         for(var i = 0 ; i < list_todo.length ; i++){
-            todos_arr.push(todo_card(list_todo[i]));
+            todos_arr.push(todo_card(list_todo[i] , i));
             //console.log(todos_arr[i]);
             todos.appendChild(todos_arr[i]);
         }
     }
 
+    let remove_todos = ()=>{
+        let todos = document.getElementById("todos");
+        todos.innerHTML = "";
+    }
+
 
     //makes a todo card
-    let todo_card = (todo)=>{
+    let todo_card = (todo , i)=>{
         let element = document.createElement("div");
         element.classList.add("cls-todo");
+        element.dataset.location = i;
 
         let title = document.createElement("div");
         title.textContent = todo.title;
@@ -73,11 +80,10 @@ let domhandler = (()=>{
         element.appendChild(priority);
         priority.classList.add("priority");
 
-        let status = document.createElement("div");
-        status.classList.add("curr-status");
-        status.textContent = todo.status;
-        element.appendChild(status);
-
+        let close = document.createElement("div");
+        close.classList.add("todo-close");
+        close.textContent = "x";
+        element.appendChild(close);
         return element;
     }
 
@@ -133,17 +139,62 @@ let domhandler = (()=>{
     }
 
 
+    //change projects
+    let change_project = (projects)=>{
+        let side_panel = document.getElementById("side-panel");
+        side_panel.addEventListener("click" , (e)=>{
+            handle_change(e , projects);
+        });
+    }
+
+    let handle_change = (e , projects)=>{
+        for(let i = 0 ; i < projects.length ; i++){
+            
+            if(projects[i].property == e.target.dataset.name){
+                remove_todos();
+                draw_todos(handler.get_todos(e.target.dataset.name));
+                handler.current_project = e.target.dataset.name;
+            }
+        }
+    };
 
 
+    let event_sub_todo = (e)=>{
+        
+        let title = document.getElementById("inp-title").value;
+        let desc = document.getElementById("inp-desc").value;
+        let due_date = document.getElementById("inp-date").value;
+        let priority = document.getElementById("inp-prior").value;
+
+
+        console.log(title);
+        handler.add_todo(handler.current_project , title , desc , due_date , priority);
+        remove_todos();
+        draw_todos(handler.get_todos(handler.current_project));
+        close_form(e);
+
+    }
+
+    let add_todo = ()=>{
+        
+        let submit_button = document.getElementById("submit-todo");
+        submit_button.addEventListener("click" , event_sub_todo);
+    }
+
+    
+
+   
     //initializes
     let init = ()=>{
+        
         init_add();
         init_close();
         submit_project();
-       
+        add_todo();
     }
+    init();
 
-    return {draw_project , draw_todos , init};
+    return {draw_project , draw_todos , init , change_project};
 })();   
 
 export {domhandler};

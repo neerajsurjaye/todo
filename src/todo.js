@@ -1,5 +1,8 @@
+import { domhandler } from "./domhandler";
+
 let handler = (()=>{
     let projects = [];
+    let current_project = "default";
 
     //creates todo object
     let todo = (iTitle ,iDesc ,  iDate , iPrior )=>{
@@ -33,7 +36,7 @@ let handler = (()=>{
     //addes a todo to a project
     let add_todo = (project_name , iTitle ,iDesc ,  iDate , iPrior)=>{
         for(let i = 0 ;  i < projects.length ; i++){
-            //console.log(projects[i].property);
+            //s.log(projects[i].property);
             if(projects[i].property == project_name){
                 projects[i].todos.push(todo(iTitle ,iDesc ,  iDate , iPrior));
             }
@@ -67,12 +70,18 @@ let handler = (()=>{
         let newObj = JSON.parse(localStorage.getItem("projects"));
     }
 
+
+    let init = ()=>{
+        domhandler.change_project(projects);
+    }
+
+    init();
    
     
     
 
 
-    return {add_project , add_todo , get_todos , get_projList , save , load  , projects};
+    return {add_project , add_todo , get_todos , get_projList , save , load  , projects , current_project};
 })();
 
 export {handler};

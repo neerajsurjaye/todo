@@ -1,5 +1,5 @@
 :root{
-    --accent : #4527A0;
+    --accent : #6348b3;
     --light : #927dcf;
 }
 
@@ -130,6 +130,13 @@ body{
 
 .due-date{
     margin-left: auto;
+}
+
+
+.todo-close{
+    color: var(--light);
+    cursor: pointer;
+
 }
 
 
