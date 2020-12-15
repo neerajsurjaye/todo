@@ -153,7 +153,8 @@ let domhandler = (()=>{
             if(projects[i].property == e.target.dataset.name){
                 remove_todos();
                 draw_todos(handler.get_todos(e.target.dataset.name));
-                handler.current_project = e.target.dataset.name;
+                handler.update_current(e.target.dataset.name);
+                //console.log(handler.get_current());
             }
         }
     };
@@ -167,10 +168,10 @@ let domhandler = (()=>{
         let priority = document.getElementById("inp-prior").value;
 
 
-        console.log(title);
-        handler.add_todo(handler.current_project , title , desc , due_date , priority);
+
+        handler.add_todo(handler.get_current() , title , desc , due_date , priority);
         remove_todos();
-        draw_todos(handler.get_todos(handler.current_project));
+        draw_todos(handler.get_todos(handler.get_current()));
         close_form(e);
 
     }
@@ -179,6 +180,22 @@ let domhandler = (()=>{
         
         let submit_button = document.getElementById("submit-todo");
         submit_button.addEventListener("click" , event_sub_todo);
+    }
+
+
+    let close_todo = ()=>{
+        let container = document.getElementById("container");
+        container.addEventListener("click" , event_close_todo);
+    }
+
+    let event_close_todo = (e)=>{
+        
+        if(e.target.classList.contains("todo-close")){
+            
+            handler.remove_todo(e.target.parentElement.dataset.location);
+        }
+        remove_todos();
+        draw_todos(handler.get_todos(handler.get_current()));
     }
 
     
@@ -191,6 +208,7 @@ let domhandler = (()=>{
         init_close();
         submit_project();
         add_todo();
+        close_todo();
     }
     init();
 

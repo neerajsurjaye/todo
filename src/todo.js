@@ -52,6 +52,29 @@ let handler = (()=>{
         }
     }
 
+    let removeNull = (e)=>{
+        if(e != null){
+            return e;
+        }
+    }
+
+    let remove_todo = (loc)=>{
+        
+        console.log(current_project , projects);   
+        for(let i = 0 ; i < projects.length ; i++){  
+            
+            if(current_project == projects[i].property){               
+
+                projects[i].todos[loc] = null;
+                projects[i].todos = projects[i].todos.filter(removeNull);
+                //console.log (projects[i].todos);
+                return;
+            }
+        }
+
+        
+    }
+
 
     //returns project list 
     let get_projList = ()=>{
@@ -75,13 +98,21 @@ let handler = (()=>{
         domhandler.change_project(projects);
     }
 
+    let update_current = (e)=>{
+        current_project = e;
+    }
+
+    let get_current = ()=>{
+        return current_project;
+    }
+
     init();
    
     
     
 
 
-    return {add_project , add_todo , get_todos , get_projList , save , load  , projects , current_project};
+    return {add_project , add_todo , get_todos , get_projList , save , load  , projects , current_project , remove_todo , update_current , get_current};
 })();
 
 export {handler};
