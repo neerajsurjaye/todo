@@ -128,7 +128,7 @@ body{
 
 .priority{
     height: 100%;
-    width: 45px;
+    width: 15px;
     
 }
 
@@ -272,3 +272,12 @@ body{
     text-align: center;
 }
 
+#footer > label{
+    
+}
+
+
+#footer > label:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}

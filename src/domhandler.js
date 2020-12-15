@@ -44,6 +44,7 @@ let domhandler = (()=>{
     let remove_todos = ()=>{
         let todos = document.getElementById("todos");
         todos.innerHTML = "";
+
     }
 
 
@@ -71,11 +72,11 @@ let domhandler = (()=>{
         let priority = document.createElement("div");
 
         if(todo.priority == 3){
-            priority.style.backgroundColor = "red";
+            priority.style.backgroundColor = "#ff5050";
         }else if(todo.priority == 2){
-            priority.style.backgroundColor = "yellow";
+            priority.style.backgroundColor = "#ffff66";
         }else{
-            priority.style.backgroundColor = "green";
+            priority.style.backgroundColor = "#66ff66";
         }
         
         element.appendChild(priority);
@@ -143,6 +144,7 @@ let domhandler = (()=>{
     //change projects
     let change_project = (projects)=>{
         let side_panel = document.getElementById("side-panel");
+        
         side_panel.addEventListener("click" , (e)=>{
             handle_change(e , projects);
         });

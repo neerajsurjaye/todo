@@ -30,6 +30,7 @@ let handler = (()=>{
     //add properties
     let add_project = (proj_title) => {
         projects.push(property_pair(proj_title));
+        save();
     };
 
     
@@ -41,6 +42,7 @@ let handler = (()=>{
                 projects[i].todos.push(todo(iTitle ,iDesc ,  iDate , iPrior));
             }
         }
+        save();
     }
 
     //return todos of a project 
@@ -72,6 +74,8 @@ let handler = (()=>{
             }
         }
 
+        save();
+
         
     }
 
@@ -91,6 +95,8 @@ let handler = (()=>{
 
     let load = ()=>{
         let newObj = JSON.parse(localStorage.getItem("projects"));
+        projects = newObj;
+        console.log(projects);
     }
 
 
@@ -105,14 +111,12 @@ let handler = (()=>{
     let get_current = ()=>{
         return current_project;
     }
-
-    init();
    
     
     
 
 
-    return {add_project , add_todo , get_todos , get_projList , save , load  , projects , current_project , remove_todo , update_current , get_current};
+    return {add_project , add_todo , get_todos , get_projList , save , load  , projects , current_project , remove_todo , update_current , get_current , init};
 })();
 
 export {handler};
