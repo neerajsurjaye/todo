@@ -1,10 +1,11 @@
 
+
 import {handler} from "./todo"; 
 
 
 
 let domhandler = (()=>{
-    
+   
 
     //draws side project list
     let draw_project = (proj_list)=>{
@@ -153,8 +154,23 @@ let domhandler = (()=>{
             if(projects[i].property == e.target.dataset.name){
                 remove_todos();
                 draw_todos(handler.get_todos(e.target.dataset.name));
+                
                 handler.update_current(e.target.dataset.name);
-                //console.log(handler.get_current());
+                
+               
+                console.log("ran");
+                
+                let nodes = e.target.parentElement.childNodes;
+                for(let j = 0 ; j < nodes.length ; j++){
+                    
+                    if(nodes[j].nodeName == "DIV"){
+                        nodes[j].classList.remove("project-element-selected");
+                    }
+                }
+
+
+                e.target.classList.add("project-element-selected");
+                
             }
         }
     };
