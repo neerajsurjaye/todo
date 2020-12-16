@@ -1,236 +1,207 @@
+import { handler } from './todo';
 
+const domhandler = (() => {
+  // draws side project list
+  const draw_project = (proj_list) => {
+    const project_list = document.getElementById('project-list');
 
-import {handler} from "./todo"; 
+    const project_arr = [];
 
+    for (let i = 0; i < proj_list.length; i++) {
+      project_arr.push(document.createElement('div'));
+      project_arr[i].classList.add('project-element');
+      project_arr[i].textContent = proj_list[i];
+      project_arr[i].dataset.name = proj_list[i];
+      project_list.appendChild(project_arr[i]);
+    }
+  };
 
+  const remove_project = () => {
+    const project_list = document.getElementById('project-list');
+    project_list.innerHTML = '';
+  };
 
-let domhandler = (()=>{
-   
+  // draws todo
+  const draw_todos = (list_todo) => {
+    const todos = document.getElementById('todos');
+    const todos_arr = [];
 
-    //draws side project list
-    let draw_project = (proj_list)=>{
-        let project_list = document.getElementById("project-list");
-        
-        let project_arr = [];
+    for (let i = 0; i < list_todo.length; i++) {
+      todos_arr.push(todo_card(list_todo[i], i));
+      // console.log(todos_arr[i]);
+      todos.appendChild(todos_arr[i]);
+    }
+  };
 
-        for(var i = 0 ; i < proj_list.length ; i++){
-            project_arr.push(document.createElement("div"));
-            project_arr[i].classList.add("project-element");
-            project_arr[i].textContent = proj_list[i];
-            project_arr[i].dataset.name = proj_list[i];
-            project_list.appendChild(project_arr[i]);
-        }
+  const remove_todos = () => {
+    const todos = document.getElementById('todos');
+    todos.innerHTML = '';
+  };
 
+  // makes a todo card
+  let todo_card = (todo, i) => {
+    const element = document.createElement('div');
+    element.classList.add('cls-todo');
+    element.dataset.location = i;
+
+    const title = document.createElement('div');
+    title.textContent = todo.title;
+    title.classList.add('title');
+    element.appendChild(title);
+
+    const desc = document.createElement('div');
+    desc.textContent = todo.description;
+    element.appendChild(desc);
+    desc.classList.add('desc');
+
+    const due_date = document.createElement('div');
+    due_date.textContent = todo.dueDate;
+    element.appendChild(due_date);
+    due_date.classList.add('due-date');
+
+    const priority = document.createElement('div');
+
+    if (todo.priority == 3) {
+      priority.style.backgroundColor = '#ff5050';
+    } else if (todo.priority == 2) {
+      priority.style.backgroundColor = '#ffff66';
+    } else {
+      priority.style.backgroundColor = '#66ff66';
     }
 
-    let remove_project = ()=>{
-        let project_list = document.getElementById("project-list");
-        project_list.innerHTML = "";
+    element.appendChild(priority);
+    priority.classList.add('priority');
+
+    const close = document.createElement('div');
+    close.classList.add('todo-close');
+    close.textContent = 'x';
+    element.appendChild(close);
+    return element;
+  };
+
+  // displays form
+  const display_form = (e) => {
+    const form_projects = document.getElementById('projects-add');
+    const form_todo = document.getElementById('todo-add');
+
+    if (e.target.id == 'add-projects') {
+      form_projects.style.display = 'flex';
+    } else if (e.target.id == 'add-todo') {
+      form_todo.style.display = 'flex';
     }
+  };
 
-    //draws todo
-    let draw_todos = (list_todo)=>{
-        let todos = document.getElementById("todos");
-        let todos_arr = [];
-       
+  // initializes add buttons
+  const init_add = () => {
+    const projects_add = document.getElementById('add-projects');
+    const todo_add = document.getElementById('add-todo');
 
-        for(var i = 0 ; i < list_todo.length ; i++){
-            todos_arr.push(todo_card(list_todo[i] , i));
-            //console.log(todos_arr[i]);
-            todos.appendChild(todos_arr[i]);
-        }
+    projects_add.addEventListener('click', display_form);
+    todo_add.addEventListener('click', display_form);
+  };
+
+  const close_form = (e) => {
+    e.target.parentElement.parentElement.style.display = 'none';
+  };
+
+  // initializes close buttons
+  const init_close = () => {
+    const close_button = document.getElementsByClassName('close');
+    for (let i = 0; i < close_button.length; i++) {
+      close_button[i].addEventListener('click', close_form);
     }
+  };
+  // handles project submit
+  const submit_project = () => {
+    const form_submit = document.getElementById('submit-projects');
 
-    let remove_todos = ()=>{
-        let todos = document.getElementById("todos");
-        todos.innerHTML = "";
+    form_submit.addEventListener('click', event_sub_project);
+  };
 
-    }
+  let event_sub_project = () => {
+    const input_project = document.getElementById('input-project');
 
+    handler.add_project(input_project.value);
 
-    //makes a todo card
-    let todo_card = (todo , i)=>{
-        let element = document.createElement("div");
-        element.classList.add("cls-todo");
-        element.dataset.location = i;
+    remove_project();
+    draw_project(handler.get_projList());
+    input_project.parentElement.parentElement.style.display = 'none';
+  };
 
-        let title = document.createElement("div");
-        title.textContent = todo.title;
-        title.classList.add("title")
-        element.appendChild(title);
+  // change projects
+  const change_project = (projects) => {
+    const side_panel = document.getElementById('side-panel');
 
-        let desc = document.createElement("div");
-        desc.textContent = todo.description;
-        element.appendChild(desc);
-        desc.classList.add("desc");
+    side_panel.addEventListener('click', (e) => {
+      handle_change(e, projects);
+    });
+  };
 
-        let due_date = document.createElement("div");
-        due_date.textContent = todo.dueDate;
-        element.appendChild(due_date);
-        due_date.classList.add("due-date")
-
-        let priority = document.createElement("div");
-
-        if(todo.priority == 3){
-            priority.style.backgroundColor = "#ff5050";
-        }else if(todo.priority == 2){
-            priority.style.backgroundColor = "#ffff66";
-        }else{
-            priority.style.backgroundColor = "#66ff66";
-        }
-        
-        element.appendChild(priority);
-        priority.classList.add("priority");
-
-        let close = document.createElement("div");
-        close.classList.add("todo-close");
-        close.textContent = "x";
-        element.appendChild(close);
-        return element;
-    }
-
-    //displays form
-    let display_form = (e)=>{
-        let form_projects = document.getElementById("projects-add");
-        let form_todo = document.getElementById("todo-add");
-    
-        if(e.target.id == "add-projects"){
-            form_projects.style.display = "flex";
-        }
-
-        else if(e.target.id == "add-todo"){
-            form_todo.style.display = "flex";
-        }
-    }
-
-    //initializes add buttons
-    let init_add = ()=>{
-        let projects_add = document.getElementById("add-projects");
-        let todo_add = document.getElementById("add-todo");
-
-        projects_add.addEventListener("click" , display_form);
-        todo_add.addEventListener("click" , display_form);
-    }
-
-    let close_form = (e)=>{
-        e.target.parentElement.parentElement.style.display = "none";
-    }
-
-    //initializes close buttons
-    let init_close = ()=>{
-        let close_button = document.getElementsByClassName("close");
-        for(var i = 0 ; i < close_button.length ; i++){
-            close_button[i].addEventListener("click" , close_form);
-        }
-    }
-    //handles project submit
-    let submit_project = ()=>{
-        let form_submit = document.getElementById("submit-projects");
-        
-        form_submit.addEventListener("click" , event_sub_project);
-    }
-
-    let event_sub_project = ()=>{      
-        let input_project = document.getElementById("input-project");
-        
-        handler.add_project(input_project.value);
-        
-        remove_project();
-        draw_project(handler.get_projList());
-        input_project.parentElement.parentElement.style.display = "none";
-    }
-
-
-    //change projects
-    let change_project = (projects)=>{
-        let side_panel = document.getElementById("side-panel");
-        
-        side_panel.addEventListener("click" , (e)=>{
-            handle_change(e , projects);
-        });
-    }
-
-    let handle_change = (e , projects)=>{
-        for(let i = 0 ; i < projects.length ; i++){
-            
-            if(projects[i].property == e.target.dataset.name){
-                remove_todos();
-                draw_todos(handler.get_todos(e.target.dataset.name));
-                
-                handler.update_current(e.target.dataset.name);
-                
-               
-                console.log("ran");
-                
-                let nodes = e.target.parentElement.childNodes;
-                for(let j = 0 ; j < nodes.length ; j++){
-                    
-                    if(nodes[j].nodeName == "DIV"){
-                        nodes[j].classList.remove("project-element-selected");
-                    }
-                }
-
-
-                e.target.classList.add("project-element-selected");
-                
-            }
-        }
-    };
-
-
-    let event_sub_todo = (e)=>{
-        
-        let title = document.getElementById("inp-title").value;
-        let desc = document.getElementById("inp-desc").value;
-        let due_date = document.getElementById("inp-date").value;
-        let priority = document.getElementById("inp-prior").value;
-
-
-
-        handler.add_todo(handler.get_current() , title , desc , due_date , priority);
+  let handle_change = (e, projects) => {
+    for (let i = 0; i < projects.length; i++) {
+      if (projects[i].property == e.target.dataset.name) {
         remove_todos();
-        draw_todos(handler.get_todos(handler.get_current()));
-        close_form(e);
+        draw_todos(handler.get_todos(e.target.dataset.name));
 
-    }
+        handler.update_current(e.target.dataset.name);
 
-    let add_todo = ()=>{
-        
-        let submit_button = document.getElementById("submit-todo");
-        submit_button.addEventListener("click" , event_sub_todo);
-    }
+        console.log('ran');
 
-
-    let close_todo = ()=>{
-        let container = document.getElementById("container");
-        container.addEventListener("click" , event_close_todo);
-    }
-
-    let event_close_todo = (e)=>{
-        
-        if(e.target.classList.contains("todo-close")){
-            
-            handler.remove_todo(e.target.parentElement.dataset.location);
+        const nodes = e.target.parentElement.childNodes;
+        for (let j = 0; j < nodes.length; j++) {
+          if (nodes[j].nodeName == 'DIV') {
+            nodes[j].classList.remove('project-element-selected');
+          }
         }
-        remove_todos();
-        draw_todos(handler.get_todos(handler.get_current()));
+
+        e.target.classList.add('project-element-selected');
+      }
     }
+  };
 
-    
+  const event_sub_todo = (e) => {
+    const title = document.getElementById('inp-title').value;
+    const desc = document.getElementById('inp-desc').value;
+    const due_date = document.getElementById('inp-date').value;
+    const priority = document.getElementById('inp-prior').value;
 
-   
-    //initializes
-    let init = ()=>{
-        
-        init_add();
-        init_close();
-        submit_project();
-        add_todo();
-        close_todo();
+    handler.add_todo(handler.get_current(), title, desc, due_date, priority);
+    remove_todos();
+    draw_todos(handler.get_todos(handler.get_current()));
+    close_form(e);
+  };
+
+  const add_todo = () => {
+    const submit_button = document.getElementById('submit-todo');
+    submit_button.addEventListener('click', event_sub_todo);
+  };
+
+  const close_todo = () => {
+    const container = document.getElementById('container');
+    container.addEventListener('click', event_close_todo);
+  };
+
+  let event_close_todo = (e) => {
+    if (e.target.classList.contains('todo-close')) {
+      handler.remove_todo(e.target.parentElement.dataset.location);
     }
-    init();
+    remove_todos();
+    draw_todos(handler.get_todos(handler.get_current()));
+  };
 
-    return {draw_project , draw_todos , init , change_project};
-})();   
+  // initializes
+  const init = () => {
+    init_add();
+    init_close();
+    submit_project();
+    add_todo();
+    close_todo();
+  };
+  init();
 
-export {domhandler};
+  return {
+    draw_project, draw_todos, init, change_project,
+  };
+})();
+
+export { domhandler };

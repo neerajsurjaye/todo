@@ -119,4 +119,10 @@ let handler = (()=>{
     return {add_project , add_todo , get_todos , get_projList , save , load  , projects , current_project , remove_todo , update_current , get_current , init};
 })();
 
+export {handler};ve , load  , projects , current_project , remove_todo , update_current , get_current , init};
+})();
+
+export {handler};ve , load  , projects , current_project , remove_todo , update_current , get_current , init};
+})();
+
 export {handler};
